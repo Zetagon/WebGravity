@@ -2,9 +2,15 @@
 <html>
 <head>
 <title>Title of the document</title>
+<script src="/socket.io/socket.io.js"> </script>
 <script>
- const socket = new WebSocket('ws://localhost:8080');
-
+ /* const socket = new WebSocket('ws://localhost:8080');
+  */
+ var socket = io.connect('http://localhost:8080');
+ socket.on('news', function(data){
+   console.log(data);
+   socket.emit('My other event', {my: 'data'});
+ });
 </script>
 </head>
 

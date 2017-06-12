@@ -1,33 +1,23 @@
+'use strict'
 import express = require('express');
 import http = require('http');
 import url = require('url');
-import WebSocket = require('ws');
+// import WebSocket = require('ws');
+var app = express();
+var server = http.createServer(app);
+import socketio = require('socket.io');
+var io = socketio(server);
 var port = 8080;
 
-var app = express();
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
-var server = http.createServer(app);
-var wss = new WebSocket.Server({server});
 console.log('Server started at ' + new Date().toTimeString());
-
-wss.on('connection', function connecttion(ws, req){
-    console.log('new connection id: ' + ws._ultron.id);
-    // console.log(ws);
-    ws.on('message', function incoming(message){
-        console.log('Incomming message: ' + message);
-    });
-
-    ws.send('Connection establised!', function err(error){
-        if(error){
-            console.log('Error sending message. ' + error);
-        }
-    });
-
-    ws.on('close', function(code, reason){
-        console.log('Connection to socket ' + this + ' has ben lost. Reason: ' + reason);
-        console.log(this)
+io.on('connection', function(socket){
+    console.log('New connection with id: ' + socket.id );
+    socket.emit('news', {hello: 'world'});
+    socket.on('My other event', function(data){
+        console.log(data);
     });
 });
 

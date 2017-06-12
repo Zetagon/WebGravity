@@ -1,15 +1,15 @@
-const express = require('express');
-const http = require('http');
-const url = require('url');
-const WebSocket = require('ws');
-const port = 8080;
+import express = require('express');
+import http = require('http');
+import url = require('url');
+import WebSocket = require('ws');
+var port = 8080;
 
-const app = express();
+var app = express();
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
-const server = http.createServer(app);
-const wss = new WebSocket.Server({server});
+var server = http.createServer(app);
+var wss = new WebSocket.Server({server});
 console.log('Server started at ' + new Date().toTimeString());
 
 wss.on('connection', function connecttion(ws, req){
@@ -31,7 +31,8 @@ wss.on('connection', function connecttion(ws, req){
     });
 });
 
-app.use('/', require('./routes/index.js'));
+import index = require('./routes/index');
+app.use('/', index);
 server.listen(port, function listening(){
     console.log('Listening on: ' + server.address().port);
 });

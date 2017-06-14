@@ -9,6 +9,17 @@ import socketio = require('socket.io');
 let io = socketio(server);
 let port = 8080;
 
+import mongoose = require('mongoose');
+import shoppingListSchema = require('./models/shoppingList');
+mongoose.connect('mongodb://localhost:/test');
+let db = mongoose.connection;
+
+
+db.on('error', console.error.bind(console, 'connection error'));
+db.once('open', function(){
+    console.log("Connection established!");
+});
+
 app.set('views', './views');
 app.set('view engine', 'ejs');
 

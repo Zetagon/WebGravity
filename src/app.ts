@@ -3,11 +3,11 @@ import express = require('express');
 import http = require('http');
 import url = require('url');
 // import WebSocket = require('ws');
-var app = express();
-var server = http.createServer(app);
+let app = express();
+let server = http.createServer(app);
 import socketio = require('socket.io');
-var io = socketio(server);
-var port = 8080;
+let io = socketio(server);
+let port = 8080;
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
